@@ -1,9 +1,35 @@
-import React from 'react'
+import React from 'react';
+import GradesStats from '../components/grades/GradesStats';
+import GradesTable from '../components/grades/GradesTable';
+import ProposalDefence from '../components/grades/ProposalDefence';
+import BookExamination from '../components/grades/BookExamination';
 
 const Grades = () => {
   return (
-    <div>Grades</div>
-  )
-}
+    <div className="max-w-7xl mx-auto p-4">
+      <h1 className="text-2xl font-semibold mb-6">Grades</h1>
+      
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <GradesStats />
+      </div>
+      
+      {/* Grades Table */}
+      <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
+        <GradesTable />
+      </div>
+      
+      {/* Proposal Defence and Book Examination */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <ProposalDefence />
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <BookExamination />
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Grades
+export default Grades;

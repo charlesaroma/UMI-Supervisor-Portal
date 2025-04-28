@@ -1,9 +1,43 @@
-import React from 'react'
+import React from "react";
+import StatsCards from "../components/dashboard/StatsCards";
+import DirectMessagesList from "../components/dashboard/DirectMessages";
+import StatusReport from "../components/dashboard/StatusReport";
+import RecentlyAddedTable from "../components/dashboard/RecentlyAddedTable";
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div className="max-w-7xl mx-auto">
+      <div className="py-4">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-semibold">Dashboard</h1>
+          <div className="text-sm text-gray-500">
+            Last login: 08-09-2024 15:23:42PM
+          </div>
+        </div>
+      </div>
 
-export default Dashboard
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <StatsCards />
+      </div>
+
+      {/* Direct Messages Section and Status Report */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <DirectMessagesList />
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <StatusReport />
+        </div>
+      </div>
+
+      {/* Recently Added Table Section */}
+      <div className="bg-white p-4 rounded-lg shadow-sm">
+        <RecentlyAddedTable />
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
