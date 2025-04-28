@@ -1,8 +1,8 @@
 import React from 'react';
-import GradesStats from '../components/grades/GradesStats';
-import GradesTable from '../components/grades/GradesTable';
-import ProposalDefence from '../components/grades/ProposalDefence';
-import BookExamination from '../components/grades/BookExamination';
+import GradesStats from '../components/Grades/GStats';
+import GradesTable from '../components/Grades/GTable';
+import ProposalDefence from '../components/Grades/GProposalDefence';
+import BookExamination from '../components/Grades/GBookExamination';
 
 const Grades = () => {
   return (

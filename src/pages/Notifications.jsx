@@ -1,7 +1,7 @@
 import React from 'react';
-import NotificationsStats from '../components/notifications/NotificationsStats';
-import NotificationsTable from '../components/notifications/NotificationsTable';
-import NotificationsPopUp from '../components/notifications/NotificationsPopUp';
+import NotificationsStats from '../components/Notifications/NStats';
+import NotificationsTable from '../components/Notifications/NTable';
+import NotificationsPopUp from '../components/Notifications/NPopUp';
 
 const Notifications = () => {
   return (

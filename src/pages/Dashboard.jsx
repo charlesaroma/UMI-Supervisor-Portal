@@ -1,8 +1,8 @@
 import React from "react";
-import StatsCards from "../components/dashboard/StatsCards";
-import DirectMessagesList from "../components/dashboard/DirectMessages";
-import StatusReport from "../components/dashboard/StatusReport";
-import RecentlyAddedTable from "../components/dashboard/RecentlyAddedTable";
+import StatsCards from "../components/Dashboard/DStats";
+import DirectMessagesList from "../components/Dashboard/DMessage";
+import StatusReportChat from "../components/Dashboard/DStatusReportChat";
+import RecentlyAddedTable from "../components/Dashboard/DRecentlyAddedTable";
 
 const Dashboard = () => {
   return (
@@ -28,7 +28,7 @@ const Dashboard = () => {
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow-sm">
-          <StatusReport />
+          <StatusReportChat />
         </div>
       </div>
 
