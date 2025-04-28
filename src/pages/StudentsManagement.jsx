@@ -8,7 +8,7 @@ const StudentsManagement = () => {
       <h1 className="text-2xl font-semibold mb-6">Students Management</h1>
       
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="mb-6">
         <StudentsStats />
       </div>
       

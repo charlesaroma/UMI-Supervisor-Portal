@@ -17,7 +17,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className=" mb-6">
         <StatsCards />
       </div>
 
