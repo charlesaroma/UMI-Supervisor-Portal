@@ -16,7 +16,7 @@ const otherNavItems = [
 const Sidebar = () => {
   const location = useLocation();
   return (
-    <aside className="w-64 bg-white shadow-md flex flex-col min-h-screen">
+    <aside className="w-64 bg-white shadow-md flex flex-col min-h-screen h-screen overflow-y-auto">
       {/* Logo */}
       <div className="px-6 py-5">
         <div className="flex items-start">

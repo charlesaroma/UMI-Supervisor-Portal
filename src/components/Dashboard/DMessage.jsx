@@ -49,7 +49,7 @@ const DMessage = () => {
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Direct Messages</h2>
-        <button className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 flex items-center text-xs font-medium">
+        <button className="bg-blue-700 text-white px-4 py-2 cursor-pointer rounded hover:bg-blue-800 flex items-center text-xs font-medium">
           View More
           <Icon icon="mdi:arrow-right" className="ml-2 text-base" />
         </button>

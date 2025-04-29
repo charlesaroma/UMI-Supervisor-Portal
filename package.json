@@ -16,6 +16,7 @@
     "@tanstack/react-table": "^8.21.3",
     "formik": "^2.4.6",
     "iconify": "^1.4.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.2",

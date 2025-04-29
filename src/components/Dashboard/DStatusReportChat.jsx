@@ -11,7 +11,7 @@ const StatusReportChat = () => {
   return (
     <div className="p-6 flex flex-col h-full">
       <div className="mb-4">
-        <select className="border border-[#E5E7EB] rounded-lg px-4 py-2 text-gray-700 text-base font-medium shadow-sm focus:outline-none">
+        <select className="border border-[#E5E7EB] cursor-pointer rounded-lg px-4 py-2 text-gray-700 text-base font-medium shadow-sm focus:outline-none">
           <option>Status report</option>
         </select>
       </div>
