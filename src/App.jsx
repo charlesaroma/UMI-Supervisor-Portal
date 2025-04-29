@@ -2,14 +2,14 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Pages
-import Login from './pages/Login';
-import ForgotPassword from './pages/ForgotPassword';
-import Dashboard from './pages/Dashboard';
-import StudentsManagement from './pages/StudentsManagement';
-import Grades from './pages/Grades';
-import DirectMessages from './pages/DirectMessages';
-import Notifications from './pages/Notifications';
-import Settings from './pages/Settings';
+import Login from './pages/0.auth/Login';
+import ForgotPassword from './pages/0.auth/ForgotPassword';
+import Dashboard from './pages/1.Dashboard/Dashboard';
+import StudentsManagement from './pages/2.StudentsManagement/StudentsManagement';
+import Grades from './pages/3.Grades/Grades';
+import DirectMessages from './pages/4.DirectMessages/DirectMessages';
+import Notifications from './pages/5.Notifications/Notifications';
+import Settings from './pages/6.Settings/Settings';
 
 // Layout
 import Layout from './Layout/Layout';

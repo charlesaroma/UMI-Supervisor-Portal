@@ -1,8 +1,8 @@
 import React from "react";
-import StatsCards from "../components/Dashboard/DStats";
-import DirectMessagesList from "../components/Dashboard/DMessage";
-import StatusReportChat from "../components/Dashboard/DStatusReportChat";
-import RecentlyAddedTable from "../components/Dashboard/DRecentlyAddedTable";
+import StatsCards from "./DashboardStats";
+import DirectMessagesList from "./DashboardDirectMessages";
+import StatusReportChat from "./DashboardStatusReportChat";
+import RecentlyAddedTable from "./DashboardRecentlyAddedTable";
 
 const Dashboard = () => {
   return (

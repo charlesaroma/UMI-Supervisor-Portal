@@ -1,6 +1,6 @@
 import React from 'react';
-import StudentsStats from '../components/Students-Management/SStats';
-import StudentsTable from '../components/Students-Management/STable';
+import StudentsStats from './StudentManagementStats';
+import StudentsTable from './StudentManagementTable';
 
 const StudentsManagement = () => {
   return (

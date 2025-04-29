@@ -1,6 +1,6 @@
 import React from 'react';
-import MessagesList from '../components/Direct-Messages/MessageList';
-import MessageDetail from '../components/Direct-Messages/MessageDetail';
+import MessagesList from '../4.DirectMessages/DirectMessageList';
+import MessageDetail from '../4.DirectMessages/DirectMessageDetail';
 
 const DirectMessages = () => {
   return (
