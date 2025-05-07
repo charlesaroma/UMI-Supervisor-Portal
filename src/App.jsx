@@ -12,7 +12,7 @@ import Notifications from './pages/5.Notifications/Notifications';
 import Settings from './pages/6.Settings/Settings';
 
 // Layout
-import Layout from './Layout/Layout';
+import Layout from './components/Layout/Layout';
 
 function App() {
   return (

@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Mock login logic
-    if (email === "jmick@umi.ac.ug" && password === "password123") {
+    if (email === "josh@umi.ac.ug" && password === "password123") {
       setError("");
       navigate("/dashboard");
     } else {
