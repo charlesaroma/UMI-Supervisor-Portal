@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 
 const NotificationSearchBar = ({ value, onChange }) => (
-  <div className="relative w-72 mb-4">
+  <div className="relative w-xl mb-4">
     <input
       type="text"
       placeholder="Search by Type"
