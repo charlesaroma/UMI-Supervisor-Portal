@@ -10,12 +10,12 @@ const Grades = () => {
       <h1 className="text-2xl font-semibold mb-6">Grades</h1>
       
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="mb-6">
         <GradesStats />
       </div>
       
       {/* Grades Table */}
-      <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
+      <div className="mb-6">
         <GradesTable />
       </div>
       
