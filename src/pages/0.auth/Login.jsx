@@ -1,25 +1,51 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { useAuth } from "../../context/AuthContext";
+import { useLoginSupervisor } from "../../store/tanstackStore/services/queries";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useFormik } from "formik";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
-  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Mock login logic
-    if (email === "josh@umi.ac.ug" && password === "password123") {
-      setError("");
-      navigate("/dashboard");
-    } else {
-      setError("Incorrect username or password. Please try again");
-    }
-  };
+  const loginMutation = useLoginSupervisor();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      remember: false,
+    },
+    onSubmit: (values) => {
+      toast.dismiss(); // Clear any existing toasts
+
+      loginMutation.mutate(
+        {
+          email: values.email,
+          password: values.password,
+          rememberMe: values.remember,
+        },
+        {
+          onSuccess: (data) => {
+            login({
+              token: data.token,
+              role: data.role,
+            });
+            toast.success("Login successful! Welcome back.");
+            navigate("/dashboard", { replace: true });
+          },
+          onError: (error) => {
+            console.error("Login error:", error);
+            toast.error(error.message || "Login failed. Please try again.");
+          },
+        }
+      );
+    },
+  });
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -29,18 +55,22 @@ const Login = () => {
       </div>
       {/* Login Card */}
       <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <h2 className="text-2xl font-bold text-center mb-6">Supervisor Login</h2>
+        <form onSubmit={formik.handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">
               School Email
             </label>
             <input
               type="email"
+              name="email"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               required
+              disabled={loginMutation.isPending}
+              autoComplete="username"
             />
           </div>
           <div>
@@ -48,34 +78,46 @@ const Login = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
                 className={`w-full border ${
-                  error ? "border-red-400" : "border-gray-300"
+                  loginMutation.error ? "border-red-400" : "border-gray-300"
                 } rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200`}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 required
+                disabled={loginMutation.isPending}
+                autoComplete="current-password"
               />
               <button
                 type="button"
                 className="absolute right-2 top-2 text-gray-500"
                 onClick={() => setShowPassword((v) => !v)}
                 tabIndex={-1}
+                disabled={loginMutation.isPending}
               >
-                <Icon
-                  icon={showPassword ? "mdi:eye-off" : "mdi:eye"}
-                  className="h-5 w-5"
-                />
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
               </button>
             </div>
-            {error && <div className="text-red-600 text-sm mt-1">{error}</div>}
+            {loginMutation.error && (
+              <div className="text-red-600 text-sm mt-1">
+                {loginMutation.error.message}
+              </div>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <label className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"
-                checked={remember}
-                onChange={(e) => setRemember(e.target.checked)}
+                name="remember"
+                checked={formik.values.remember}
+                onChange={formik.handleChange}
                 className="form-checkbox rounded text-blue-600"
+                disabled={loginMutation.isPending}
               />
               Remember me
             </label>
@@ -88,9 +130,17 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-900 text-white py-2 rounded-md font-semibold hover:bg-blue-800 transition-colors mt-2"
+            className="w-full bg-blue-900 text-white py-2 rounded-md font-semibold hover:bg-blue-800 transition-colors mt-2 flex items-center justify-center gap-2"
+            disabled={loginMutation.isPending}
           >
-            Submit
+            {loginMutation.isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Logging in...</span>
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
       </div>

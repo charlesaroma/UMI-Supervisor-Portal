@@ -1,86 +1,54 @@
 import React from 'react';
-import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
-import { dashboardTableData } from '../../data/DashboardTableData';
+import { RiArrowDownSLine } from 'react-icons/ri';
 
-const columns = [
-  {
-    header: 'Fullname',
-    accessorKey: 'fullname',
-  },
-  {
-    header: 'Campus',
-    accessorKey: 'campus1',
-  },
-  {
-    header: 'Campus',
-    accessorKey: 'campus2',
-  },
-  {
-    header: 'Category',
-    accessorKey: 'category',
-    cell: info => (
-      <span
-        className="px-3 py-1 rounded bg-[#FDD388] text-xs font-semibold"
+const DashboardRecentlyAddedTable = ({ data = [], isLoading = false, isError = false, onViewMore }) => (
+  <div className="bg-white rounded-lg shadow-md flex flex-col h-full">
+    <div className="flex flex-row justify-between items-start gap-6 px-6 pt-4 pb-2">
+      <h2 className="text-lg font-medium text-gray-900">Recently Added</h2>
+      <button
+        onClick={onViewMore}
+        className="text-sm text-white bg-[#23388F] hover:bg-[#23388F]/80 flex items-center gap-1 px-3 py-1.5 rounded"
       >
-        {info.getValue()}
-      </span>
-    ),
-  },
-  {
-    header: 'Status',
-    accessorKey: 'status',
-    cell: info => (
-      <span className="px-3 py-1 rounded border border-gray-300 text-gray-500 text-xs bg-gray-50 font-medium">
-        {info.getValue()}
-      </span>
-    ),
-  },
-];
-
-const RecentlyAddedTable = () => {
-  const table = useReactTable({
-    data: dashboardTableData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  return (
-    <div className="bg-white p-4">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="font-semibold text-base">Recently Added</h2>
-        <button className="bg-blue-700 text-white px-4 py-2 rounded text-xs font-medium flex items-center gap-1 hover:bg-blue-800">
-          View More
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-xs">
-          <thead className="bg-gray-50">
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <th key={header.id} className="px-4 py-2 font-semibold text-left text-gray-700">
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map(row => (
-              <tr key={row.id} className="border-b border-[#E5E7EB] last:border-0">
-                {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="px-4 py-2">
-                    {flexRender(cell.column.columnDef.cell ?? cell.column.columnDef.accessorKey, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        View More <RiArrowDownSLine className="w-4 h-4" />
+      </button>
     </div>
-  );
-};
+    <div className="px-2 pt-2 sm:px-6 sm:pt-0 flex-1">
+      {isLoading ? (
+        <div className="flex items-center justify-center h-40">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#23388F]" />
+        </div>
+      ) : isError ? (
+        <div className="text-center py-4 text-red-500 text-sm">Error loading data. Please try again.</div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="py-2 px-2 text-left text-xs font-medium text-gray-500">Fullname</th>
+                <th className="py-2 px-2 text-left text-xs font-medium text-gray-500">Campus</th>
+                <th className="py-2 px-2 text-left text-xs font-medium text-gray-500">Category</th>
+                <th className="py-2 px-2 text-left text-xs font-medium text-gray-500">Status</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {data.map((row, idx) => (
+                <tr key={idx} className="hover:bg-gray-50">
+                  <td className="py-2 px-2 whitespace-nowrap text-xs text-gray-900 font-medium">{row.name}</td>
+                  <td className="py-2 px-2 whitespace-nowrap text-xs text-gray-700">{row.campus}</td>
+                  <td className="py-2 px-2 whitespace-nowrap">
+                    <span className={`inline-flex h-[28px] capitalize rounded-[6px] border py-[4px] px-[9px] items-center justify-center text-xs font-semibold ${row.category === 'Masters' ? 'bg-yellow-100 border-yellow-300 text-yellow-800' : 'bg-purple-100 border-purple-300 text-purple-800'}`}>{row.category}</span>
+                  </td>
+                  <td className="py-2 px-2 whitespace-nowrap">
+                    <span className="inline-flex h-[28px] rounded-[6px] border border-gray-300 py-[4px] px-[9px] items-center justify-center text-xs font-semibold bg-gray-50 text-gray-700">{row.status}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </div>
+);
 
-export default RecentlyAddedTable;
+export default DashboardRecentlyAddedTable;

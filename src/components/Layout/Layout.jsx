@@ -4,17 +4,17 @@ import Sidebar from './Sidebar';
 
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="flex h-screen bg-gray-50  ">
       {/* Sidebar - Fixed on the left */}
-      <div className="fixed inset-y-0 left-0 z-30">
+      {/* <div className="fixed inset-y-0 left-0 z-30"> */}
         <Sidebar />
-      </div>
+      {/* </div> */}
       {/* Main Content Area */}
-      <div className="flex-1 ml-64 min-h-screen overflow-y-auto">
-        <div className="p-6">
+      <main className="flex-1  overflow-auto">
+        {/* <div className="p-6"> */}
           <Outlet />
-        </div>
-      </div>
+        {/* </div> */}
+      </main>
     </div>
   );
 };
