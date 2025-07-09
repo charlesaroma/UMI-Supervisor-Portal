@@ -94,6 +94,27 @@ export const updateStudentProgress = async (studentId, data) => {
     }
 };
 
+/*** STUDENT STATUS MANAGEMENT */
+
+export const getStudentStatuses = async (studentId) => {
+    try {
+        const response = await apiRequest.get(`/supervisor/students/${studentId}/statuses`)
+        return response.data
+    } catch (error) {
+        errorHandling(error)
+    }
+}
+
+/** Dissertation management */
+export const getStudentBooksService = async (studentId) => {
+    try {
+      const response = await apiRequest.get(`/supervisor/student-books/${studentId}`);
+      return response.data;
+    } catch (error) {
+      errorHandling(error);
+    }
+  }
+
 /* ********** PROPOSAL MANAGEMENT ********** */
 
 export const getStudentProposals = async (studentId) => {

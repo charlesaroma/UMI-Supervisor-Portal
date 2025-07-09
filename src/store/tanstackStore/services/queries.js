@@ -11,7 +11,9 @@ import {
   getStudentProposals,
   reviewProposal,
   getDashboardStats,
-  getNotifications
+  getNotifications,
+  getStudentStatuses,
+  getStudentBooksService
 } from "./api";
 
 /* ********** AUTH QUERIES ********** */
@@ -79,6 +81,17 @@ export const useUpdateStudentProgress = () => {
   });
 };
 
+/********* STUDENT STATUS QUERIES ******* */
+
+export function useGetStudentStatuses(studentId) {
+  return useQuery({
+    queryKey: ['studentStatuses', studentId],
+    queryFn: () => getStudentStatuses(studentId),
+    enabled: !!studentId,
+   
+  });
+}
+
 /* ********** PROPOSAL QUERIES ********** */
 
 export const useGetStudentProposals = (studentId) => {
@@ -99,6 +112,15 @@ export const useReviewProposal = () => {
     },
   });
 };
+
+/** Dissertation management */
+export function useGetStudentBooks(studentId) {
+  return useQuery({
+    queryKey: ['studentBooks', studentId],
+    queryFn: () => getStudentBooksService(studentId),
+    enabled: !!studentId,
+  });
+}
 
 /* ********** DASHBOARD QUERIES ********** */
 
