@@ -6,7 +6,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/0.auth/Login';
 import ForgotPassword from './pages/0.auth/ForgotPassword';
 import Dashboard from './pages/1.Dashboard/Dashboard';
-import StudentsManagement from './pages/2.StudentsManagement/StudentsManagement';
+import StudentsManagement from './pages/2.StudentsManagement/StudentManagement';
 import Grades from './pages/3.Grades/Grades';
 import DirectMessages from './pages/4.DirectMessages/DirectMessages';
 import Notifications from './pages/5.Notifications/Notifications';
@@ -14,6 +14,7 @@ import Settings from './pages/6.Settings/Settings';
 
 // Layout
 import Layout from './components/Layout/Layout';
+import StudentProfile from './pages/2.StudentsManagement/StudentProfile';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -65,6 +66,8 @@ function AppRoutes() {
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="students" element={<StudentsManagement />} />
+        <Route path="students/profile/:id" element={<StudentProfile />} />
+
         <Route path="grades" element={<Grades />} />
         <Route path="direct-messages" element={<DirectMessages />} />
         <Route path="notifications" element={<Notifications />} />
