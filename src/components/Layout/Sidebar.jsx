@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useGetSupervisorProfile } from '../../store/tanstackStore/services/queries';
@@ -36,6 +36,14 @@ const Sidebar = () => {
     toast.success("Logged out successfully");
   };
 
+  const getLinkClassName = useCallback(({ isActive }) => {
+    return `flex items-center px-3 py-2 min-h-[40px] gap-2 text-xs font-[Inter-Medium] rounded-md ${
+      isActive
+        ? "!text-[#23388F]  bg-[#ECF6FB] [&_svg]:opacity-100 [&_span]:!text-[#23388F]"
+        : "text-gray-400   hover:bg-[#ECF6FB]  [&_span]:text-gray-700"
+    }`;
+  }, []);
+
   return (
     <aside className="w-64 min-h-screen border-r border-[#E5E7EB] flex flex-col bg-white">
       {/* Logo Section */}
@@ -65,21 +73,15 @@ const Sidebar = () => {
           <nav className="space-y-1">
             <p className="text-xs font-medium text-gray-400 mb-3">Main Activities</p>
             {mainNavItems.map((item) => {
-              const isActive = location.pathname === item.path;
+              
               return (
                 <NavLink
-                  key={item.name}
+                  key={item.path}
                   to={item.path}
-                  className={`
-                    flex items-center gap-3 px-4 py-2 rounded-md
-                    ${isActive 
-                      ? 'text-[#23388F] bg-[#ECF6FB]' 
-                      : 'text-[#070B1D] hover:bg-[#ECF6FB]'
-                    }
-                  `}
+                  className={getLinkClassName}
                 >
                   <item.icon 
-                    className={`w-[15px] h-[15px] ${isActive ? 'text-[#23388F]' : 'text-[#939495]'}`} 
+                    className={`w-[15px] h-[15px] `} 
                   />
                   <span className="text-xs font-medium">{item.name}</span>
                   {item.badge && (
@@ -94,21 +96,15 @@ const Sidebar = () => {
           <nav className="space-y-1">
             <p className="text-xs font-medium text-gray-400 mb-3">Other options</p>
             {otherNavItems.map((item) => {
-              const isActive = location.pathname === item.path;
+              
               return (
                 <NavLink
                   key={item.name}
                   to={item.path}
-                  className={`
-                    flex items-center gap-3 px-4 py-2 rounded-md
-                    ${isActive 
-                      ? 'text-[#23388F] bg-[#ECF6FB]' 
-                      : 'text-[#070B1D] hover:bg-[#ECF6FB]'
-                    }
-                  `}
+                  className={getLinkClassName}
                 >
                   <item.icon 
-                    className={`w-[15px] h-[15px] ${isActive ? 'text-[#23388F]' : 'text-[#939495]'}`} 
+                    className={`w-[15px] h-[15px] `} 
                   />
                   <span className="text-xs font-medium">{item.name}</span>
                 </NavLink>
