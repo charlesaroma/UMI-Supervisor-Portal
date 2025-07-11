@@ -17,7 +17,7 @@ import {
 const mainNavItems = [
   { name: 'Dashboard', path: '/dashboard', icon: RiDashboardLine },
   { name: 'Students Management', path: '/students', icon: RiStudentsLine },
-  { name: 'Grades', path: '/grades', icon: RiTableLine },
+  { name: 'Grade Management', path: '/grades', icon: RiTableLine },
   { name: 'Direct Messages', path: '/direct-messages', icon: RiMessage2Line, badge: 20 },
 ];
 

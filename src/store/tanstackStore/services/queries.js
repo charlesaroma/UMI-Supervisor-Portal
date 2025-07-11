@@ -13,7 +13,9 @@ import {
   getDashboardStats,
   getNotifications,
   getStudentStatuses,
-  getStudentBooksService
+  getStudentBooksService,
+  getSchoolProposals,
+  getAllBooksService
 } from "./api";
 
 /* ********** AUTH QUERIES ********** */
@@ -113,6 +115,15 @@ export const useReviewProposal = () => {
   });
 };
 
+
+export function useGetSchoolProposals() {
+  return useQuery({
+    queryKey: ['schoolProposals'],
+    queryFn: getSchoolProposals,
+    
+  });
+}
+
 /** Dissertation management */
 export function useGetStudentBooks(studentId) {
   return useQuery({
@@ -121,6 +132,16 @@ export function useGetStudentBooks(studentId) {
     enabled: !!studentId,
   });
 }
+
+export function useGetAllBooks() {
+  return useQuery({
+    queryKey: ['books'],
+    queryFn: getAllBooksService,
+    
+  });
+}
+
+
 
 /* ********** DASHBOARD QUERIES ********** */
 

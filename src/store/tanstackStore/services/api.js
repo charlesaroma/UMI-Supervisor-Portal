@@ -115,6 +115,15 @@ export const getStudentBooksService = async (studentId) => {
     }
   }
 
+  export const getAllBooksService = async () => {
+    try {
+      const response = await apiRequest.get('/supervisor/books');
+      return response.data;
+    } catch (error) {
+      errorHandling(error);
+    }
+  }
+
 /* ********** PROPOSAL MANAGEMENT ********** */
 
 export const getStudentProposals = async (studentId) => {
@@ -134,6 +143,15 @@ export const reviewProposal = async (proposalId, data) => {
         errorHandling(error);
     }
 };
+
+export const getSchoolProposals = async () => {
+    try {
+        const response = await apiRequest.get("/supervisor/proposals")
+        return response.data
+    } catch (error) {
+        errorHandling(error)
+    }
+}
 
 /* ********** DASHBOARD ********** */
 
