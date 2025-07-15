@@ -172,3 +172,14 @@ export const getNotifications = async () => {
         errorHandling(error);
     }
 }; 
+
+/* ********** MESSAGES ********** */
+
+export const getUnreadMessageCountService = async () => {
+    try {
+        const response = await apiRequest.get("/api/v1/messages/unread-count");
+        return response.data;
+    } catch (error) {
+        errorHandling(error);
+    }
+}; 

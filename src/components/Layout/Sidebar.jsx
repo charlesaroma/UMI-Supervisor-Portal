@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useGetSupervisorProfile } from '../../store/tanstackStore/services/queries';
+import { useGetSupervisorProfile, useGetUnreadMessageCount } from '../../store/tanstackStore/services/queries';
 import { toast } from 'sonner';
 import { 
   RiUserLine, 
@@ -14,13 +14,6 @@ import {
   RiSettings5Line
 } from 'react-icons/ri';
 
-const mainNavItems = [
-  { name: 'Dashboard', path: '/dashboard', icon: RiDashboardLine },
-  { name: 'Students Management', path: '/students', icon: RiStudentsLine },
-  { name: 'Grade Management', path: '/grades', icon: RiTableLine },
-  { name: 'Direct Messages', path: '/direct-messages', icon: RiMessage2Line, badge: 20 },
-];
-
 const otherNavItems = [
   { name: 'Notifications', path: '/notifications', icon: RiNotification3Line },
   { name: 'Settings', path: '/settings', icon: RiSettings5Line },
@@ -30,6 +23,16 @@ const Sidebar = () => {
   const location = useLocation();
   const { user, logout } = useAuth();
   const { data: profileData } = useGetSupervisorProfile();
+  const { data: unreadData } = useGetUnreadMessageCount();
+  
+  const unreadCount = unreadData?.unreadCount || 0;
+  
+  const mainNavItems = [
+    { name: 'Dashboard', path: '/dashboard', icon: RiDashboardLine },
+    { name: 'Students Management', path: '/students', icon: RiStudentsLine },
+    { name: 'Grade Management', path: '/grades', icon: RiTableLine },
+    { name: 'Direct Messages', path: '/direct-messages', icon: RiMessage2Line, badge: unreadCount },
+  ];
 
   const handleLogout = () => {
     logout();
@@ -84,7 +87,7 @@ const Sidebar = () => {
                     className={`w-[15px] h-[15px] `} 
                   />
                   <span className="text-xs font-medium">{item.name}</span>
-                  {item.badge && (
+                  { item.badge > 0 && (
                     <span className="ml-auto border border-[#7DD3FC] text-[#0369A1] text-sm px-2 py-0.5 rounded-full font-semibold bg-white">{item.badge}</span>
                   )}
                 </NavLink>
