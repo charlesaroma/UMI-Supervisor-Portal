@@ -16,7 +16,9 @@ import {
   getStudentBooksService,
   getSchoolProposals,
   getAllBooksService,
-  getUnreadMessageCountService
+  getUnreadMessageCount,
+  getRecentMessages,
+  getStatusStatistics
 } from "./api";
 
 /* ********** AUTH QUERIES ********** */
@@ -160,12 +162,26 @@ export const useGetNotifications = () => {
   });
 };
 
+export const useGetRecentMessages = () => {
+  return useQuery({
+    queryKey: ['recentMessages'],
+    queryFn: getRecentMessages,
+  });
+};
+
+export const useGetStatusStatistics = (category = 'main') => {
+  return useQuery({
+    queryKey: ['statusStatistics', category],
+    queryFn: () => getStatusStatistics(category),
+  });
+};
+
 /* ********** MESSAGES QUERIES ********** */
 
 export const useGetUnreadMessageCount = () => {
   return useQuery({
     queryKey: ['unreadMessageCount'],
-    queryFn: getUnreadMessageCountService,
+    queryFn: getUnreadMessageCount,
     staleTime: 30 * 1000, // Consider data stale after 30 seconds
     refetchInterval: 30 * 1000, // Refetch every 30 seconds for real-time updates
   });

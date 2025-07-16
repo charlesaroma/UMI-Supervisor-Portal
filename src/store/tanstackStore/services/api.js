@@ -171,13 +171,31 @@ export const getNotifications = async () => {
     } catch (error) {
         errorHandling(error);
     }
-}; 
+};
+
+export const getRecentMessages = async () => {
+    try {
+        const response = await apiRequest.get("/messages/conversations");
+        return response.data;
+    } catch (error) {
+        errorHandling(error);
+    }
+};
+
+export const getStatusStatistics = async (category = 'main') => {
+    try {
+        const response = await apiRequest.get(`/supervisor/dashboard/status-statistics?category=${category}`);
+        return response.data;
+    } catch (error) {
+        errorHandling(error);
+    }
+};
 
 /* ********** MESSAGES ********** */
 
-export const getUnreadMessageCountService = async () => {
+export const getUnreadMessageCount = async () => {
     try {
-        const response = await apiRequest.get("/api/v1/messages/unread-count");
+        const response = await apiRequest.get("/messages/unread-count");
         return response.data;
     } catch (error) {
         errorHandling(error);
