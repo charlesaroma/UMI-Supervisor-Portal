@@ -15,7 +15,7 @@ import {
 } from 'react-icons/ri';
 
 const otherNavItems = [
-  { name: 'Notifications', path: '/notifications', icon: RiNotification3Line },
+  // { name: 'Notifications', path: '/notifications', icon: RiNotification3Line },
   { name: 'Settings', path: '/settings', icon: RiSettings5Line },
 ];
 
