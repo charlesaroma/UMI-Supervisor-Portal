@@ -16,6 +16,9 @@ import Layout from './components/Layout/Layout';
 import StudentProfile from './pages/2.StudentsManagement/StudentProfile';
 import GradeManagement from './pages/3.Grades/GradeManagement';
 
+// PWA Component
+import PWAInstaller from './components/PWAInstaller';
+
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -86,6 +89,8 @@ function App() {
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
+      {/* PWA Installer moved outside AuthProvider so it shows on login page */}
+      <PWAInstaller />
     </BrowserRouter>
   );
 }
