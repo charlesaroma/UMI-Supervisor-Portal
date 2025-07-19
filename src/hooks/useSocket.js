@@ -55,6 +55,7 @@ export function useSocket(onMessage, onUserStatusChange, onTyping) {
     socket.on('user_status_changed', handleUserStatusChange);
     socket.on('online_users_updated', handleUserStatusChange);
     socket.on('user_typing', handleTyping);
+    socket.on('new_document_uploaded', handleMessage);
 
     // Connection event handlers
     socket.on('connect', () => {

@@ -18,7 +18,10 @@ import {
   getAllBooksService,
   getUnreadMessageCount,
   getRecentMessages,
-  getStatusStatistics
+  getStatusStatistics,
+  getStudentDocumentsService,
+  downloadStudentDocumentService,
+  uploadReviewedDocumentService
 } from "./api";
 
 /* ********** AUTH QUERIES ********** */
@@ -184,5 +187,32 @@ export const useGetUnreadMessageCount = () => {
     queryFn: getUnreadMessageCount,
     staleTime: 30 * 1000, // Consider data stale after 30 seconds
     refetchInterval: 30 * 1000, // Refetch every 30 seconds for real-time updates
+  });
+}; 
+
+/* ********** DOCUMENT MANAGEMENT QUERIES ********** */
+
+export const useGetStudentDocuments = (studentId) => {
+  return useQuery({
+    queryKey: ['studentDocuments', studentId],
+    queryFn: () => getStudentDocumentsService(studentId),
+    enabled: !!studentId,
+  });
+};
+
+export const useDownloadStudentDocument = () => {
+  return useMutation({
+    mutationFn: downloadStudentDocumentService,
+  });
+};
+
+export const useUploadReviewedDocument = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ documentId, formData }) => uploadReviewedDocumentService(documentId, formData),
+    onSuccess: (_, { documentId }) => {
+      // Invalidate student documents to refresh the list
+      queryClient.invalidateQueries(['studentDocuments']);
+    },
   });
 }; 

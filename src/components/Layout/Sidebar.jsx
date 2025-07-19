@@ -11,7 +11,8 @@ import {
   RiTableLine,
   RiMessage2Line,
   RiNotification3Line,
-  RiSettings5Line
+  RiSettings5Line,
+  RiFileTextLine
 } from 'react-icons/ri';
 
 const otherNavItems = [
@@ -31,6 +32,7 @@ const Sidebar = () => {
     { name: 'Dashboard', path: '/dashboard', icon: RiDashboardLine },
     { name: 'Students Management', path: '/students', icon: RiStudentsLine },
     { name: 'Grade Management', path: '/grades', icon: RiTableLine },
+    { name: 'Documents', path: '/documents', icon: RiFileTextLine },
     { name: 'Direct Messages', path: '/direct-messages', icon: RiMessage2Line, badge: unreadCount },
   ];
 
@@ -84,7 +86,7 @@ const Sidebar = () => {
                   className={getLinkClassName}
                 >
                   <item.icon 
-                    className={`w-[15px] h-[15px] `} 
+                    className={`w-[18px] h-[18px] `} 
                   />
                   <span className="text-xs font-medium">{item.name}</span>
                   { item.badge > 0 && (
@@ -107,7 +109,7 @@ const Sidebar = () => {
                   className={getLinkClassName}
                 >
                   <item.icon 
-                    className={`w-[15px] h-[15px] `} 
+                    className={`w-[18px] h-[18px] `} 
                   />
                   <span className="text-xs font-medium">{item.name}</span>
                 </NavLink>

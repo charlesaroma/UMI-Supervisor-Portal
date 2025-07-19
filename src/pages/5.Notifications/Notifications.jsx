@@ -1,12 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { toast } from 'sonner';
 import NotificationStats from '../5.Notifications/NotificationStats';
 import NotificationTable from '../5.Notifications/NotificationTable';
 import NotificationsPopUp from '../5.Notifications/NotificationPopUp';
 import NotificationSearchBar from './NotificationSearchBar';
+import { useSocket } from '../../hooks/useSocket';
 
 const Notifications = () => {
   const [topSearch, setTopSearch] = useState('');
   const [search, setSearch] = useState('');
+
+  // Socket event handlers for document notifications
+  const handleDocumentNotification = useCallback((data) => {
+    console.log('Document notification received:', data);
+    if (data.type === 'new_document_uploaded') {
+      const document = data.document;
+      toast.success(
+        `New document uploaded by ${document.studentName}: ${document.title}`,
+        {
+          description: `Document type: ${document.type}`,
+          action: {
+            label: 'View',
+            onClick: () => {
+              // Navigate to student documents or show document details
+              console.log('Navigate to document:', document.id);
+            }
+          }
+        }
+      );
+    }
+  }, []);
+
+  // Initialize socket connection
+  useSocket(handleDocumentNotification, null, null);
 
   return (
     <div className="max-w-7xl mx-auto p-4">

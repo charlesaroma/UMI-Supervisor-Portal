@@ -201,3 +201,40 @@ export const getUnreadMessageCount = async () => {
         errorHandling(error);
     }
 }; 
+
+/* ********** DOCUMENT MANAGEMENT ********** */
+
+export const getStudentDocumentsService = async (studentId) => {
+    try {
+        const response = await apiRequest.get(`/supervisor/students/${studentId}/documents`);
+        return response.data;
+    } catch (error) {
+        errorHandling(error);
+    }
+};
+
+export const downloadStudentDocumentService = async (documentId) => {
+    try {
+        const response = await apiRequest.get(`/supervisor/documents/${documentId}/download`, {
+            responseType: 'blob'
+        });
+        
+        // Return the response directly for blob data
+        return response;
+    } catch (error) {
+        errorHandling(error);
+    }
+};
+
+export const uploadReviewedDocumentService = async (documentId, formData) => {
+    try {
+        const response = await apiRequest.post(`/supervisor/documents/${documentId}/review`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        errorHandling(error);
+    }
+}; 

@@ -15,7 +15,10 @@ apiRequest.interceptors.request.use((config) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`
     }
-    config.headers["Content-Type"] = "application/json"
+    // Only set Content-Type to application/json if it's not already set and not a blob request
+    if (!config.headers["Content-Type"] && config.responseType !== 'blob') {
+        config.headers["Content-Type"] = "application/json"
+    }
     return config
 })
 
