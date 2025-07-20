@@ -6,8 +6,8 @@ import { FiSend, FiSearch, FiBold, FiItalic, FiUnderline, FiList, FiAlignLeft, F
 import { useGetSupervisorProfile } from '../../store/tanstackStore/services/queries';
 import { Icon } from '@iconify/react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
-//const API_URL = import.meta.env.VITE_API_URL || 'http://drims.alero.digital/api/v1';
+// const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
+const API_URL = import.meta.env.VITE_API_URL || 'http://drims.alero.digital/api/v1';
 
 // ========================================
 // UTILITY FUNCTIONS
@@ -51,6 +51,11 @@ const DirectMessages = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  
   // Get current user data
   const { data: profileData } = useGetSupervisorProfile();
   const queryClient = useQueryClient();
@@ -75,18 +80,41 @@ const DirectMessages = () => {
   }, []);
 
   // Fetch messages for selected conversation
-  const loadMessages = useCallback(async (conversationId) => {
-    setLoading(true);
+  const loadMessages = useCallback(async (conversationId, page = 1, append = false) => {
+    if (page === 1) {
+      setLoading(true);
+    } else {
+      setLoadingMore(true);
+    }
     setError('');
     try {
-      const data = await fetchWithAuth(`${API_URL}/messages/${conversationId}?page=1&pageSize=50`);
-      setMessages(data.messages || []);
+      const data = await fetchWithAuth(`${API_URL}/messages/${conversationId}?page=${page}&pageSize=20`);
+      
+      if (append) {
+        // Append older messages to the beginning
+        setMessages(prev => [...data.messages, ...prev]);
+      } else {
+        // Replace messages (first page)
+        setMessages(data.messages || []);
+      }
+      
+      setHasMore(data.hasMore || false);
+      setCurrentPage(page);
     } catch (err) {
       setError('Failed to load messages');
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
   }, []);
+
+  // Load more messages (older messages)
+  const loadMoreMessages = useCallback(async () => {
+    if (!selected || !hasMore || loadingMore) return;
+    
+    const nextPage = currentPage + 1;
+    await loadMessages(selected.id, nextPage, true);
+  }, [selected, hasMore, loadingMore, currentPage, loadMessages]);
 
   // Mark messages as read - defined before socket handlers
   const markMessagesAsRead = useCallback(async (conversationId) => {
@@ -475,7 +503,9 @@ const DirectMessages = () => {
   // Load messages when conversation is selected
   useEffect(() => {
     if (selected) {
-      loadMessages(selected.id);
+      setCurrentPage(1);
+      setHasMore(true);
+      loadMessages(selected.id, 1, false);
       markMessagesAsRead(selected.id);
       joinConversation(selected.id);
       
@@ -483,7 +513,7 @@ const DirectMessages = () => {
         leaveConversation(selected.id);
       };
     }
-  }, [selected, loadMessages, joinConversation, leaveConversation, markMessagesAsRead]);
+  }, [selected, loadMessages, joinConversation, leaveConversation]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -606,6 +636,10 @@ const DirectMessages = () => {
     setLoading(true);
     setError('');
     try {
+      console.log('Creating conversation with student:', student);
+      console.log('Student ID being sent:', student.id);
+      console.log('Current user ID:', currentUserId);
+      
       const res = await fetch(`${API_URL}/messages/conversations`, {
         method: 'POST',
         headers: {
@@ -614,7 +648,11 @@ const DirectMessages = () => {
         },
         body: JSON.stringify({ participantId: student.id })
       });
+      
+      console.log('Response status:', res.status);
       const data = await res.json();
+      console.log('Response data:', data);
+      
       if (!res.ok) throw new Error(data.error || 'Failed to start conversation');
       setIsModalOpen(false);
       await loadConversations();
@@ -623,6 +661,7 @@ const DirectMessages = () => {
         otherParticipant: data.conversation.otherParticipant || students.find(s => s.id === student.id)
       });
     } catch (err) {
+      console.error('Error creating conversation:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -826,6 +865,29 @@ const DirectMessages = () => {
           <div className="flex-1 overflow-y-auto bg-gray-50 p-6">
             {selected ? (
               <div className="space-y-4">
+                {/* Load More Button */}
+                {hasMore && (
+                  <div className="flex justify-center">
+                    <button
+                      onClick={loadMoreMessages}
+                      disabled={loadingMore}
+                      className="px-4 py-2 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:text-gray-400 text-gray-700 rounded-lg transition-colors flex items-center gap-2"
+                    >
+                      {loadingMore ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                          Loading...
+                        </>
+                      ) : (
+                        <>
+                          <Icon icon="mdi:chevron-up" className="w-4 h-4" />
+                          Load More Messages
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
+                
                 {Object.entries(groupedMessages).map(([date, msgs]) => (
                   <div key={date}>
                     {/* Date Separator */}
