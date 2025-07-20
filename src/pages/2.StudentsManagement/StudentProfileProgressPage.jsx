@@ -278,24 +278,7 @@ const StudentProfileProgressPage = ({ studentData }) => {
     <div className="space-y-6 ">
     {/* Section 1: Student Information Details */}
     <div className="grid grid-cols-3 gap-x-16 gap-y-4">
-      {/** supervisor */}
-      <div>
-        <h3 className="text-sm font-[Inter-Regular] text-[#626263] mb-1">
-        Supervisor(s)
-        </h3>
-        <div className="flex gap-2">
-        <div className="flex flex-col">
-            {currentSupervisor && currentSupervisor.length > 0 
-              ? currentSupervisor.map((supervisor) => (
-                  <span key={supervisor.id} className="text-sm font-[Inter-Regular] text-gray-900">
-                    {supervisor.title} {supervisor.name}
-                  </span>
-                ))
-              : <span className="text-sm font-[Inter-Regular] text-gray-900">No supervisor assigned</span>}
-          </div>
-         
-        </div>
-      </div>
+   
       {/** status */}
       <div>
         <h3 className="text-sm font-[Inter-Regular] text-[#626263] mb-1">
@@ -411,70 +394,7 @@ const StudentProfileProgressPage = ({ studentData }) => {
       </div>
     </div>
 
-       {/* Supervisor Table */}
-       <div className="bg-white rounded-lg shadow-sm p-4">
-      <div className="w-full flex items-center justify-between mb-4">
-        <h3 className="text-sm font-[Inter-Bold] text-gray-700 ">
-          Supervisors
-        </h3>
 
-        <div className="flex">
-          {studentData?.student?.supervisors && studentData.student.supervisors.length < 2 && (
-            <button 
-              onClick={() => navigate(`/students/add-supervisors/${id}`)} 
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-[Inter-Medium] text-white bg-primary-600 rounded hover:bg-primary-700"
-            >
-              <Icon icon="tabler:plus" width="16" height="16" />
-              Add Supervisor(s)
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="overflow-x-auto w-full">
-        {supervisorsData.length > 0 ? (
-          <table className="w-full border-collapse">
-            <thead>
-              {supervisorsTable.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id} className="bg-gray-50">
-                  {headerGroup.headers.map(header => (
-                    <th 
-                      key={header.id}
-                      className="text-left py-3 px-3 text-sm font-[Inter-Medium] text-gray-500 border-b"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {supervisorsTable.getRowModel().rows.map(row => (
-                <tr key={row.id} className="border-b hover:bg-gray-50">
-                  {row.getVisibleCells().map(cell => (
-                    <td 
-                      key={cell.id}
-                      className="py-2 px-3 text-sm font-[Inter-Regular] text-gray-900"
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <div className="py-4 px-3 text-sm text-center text-gray-500">
-            No supervisors assigned
-          </div>
-        )}
-      </div>
-    </div>
 
     {/* Section 3: Status Action Tracker and Proposal Table and Book Table */}
     <div className="bg-white rounded-lg py-2 space-y-4">

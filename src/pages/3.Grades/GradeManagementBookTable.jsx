@@ -118,18 +118,7 @@ const GradeManagementBookTable = ({
           );
         },
       }),
-      columnHelper.display({
-        id: "actions",
-        header: "",
-        cell: (info) => (
-          <button
-            onClick={() => navigate(`/grades/book/${info.row.original.id}`)}
-             className="rounded border text-gray-700 border-semantic-bg-border shadow-sm py-1 px-2 hover:bg-gray-50 font-[Inter-Medium] text-sm"
-          >
-            Open
-          </button>
-        ),
-      }),
+    
     ],
     [navigate]
   );
