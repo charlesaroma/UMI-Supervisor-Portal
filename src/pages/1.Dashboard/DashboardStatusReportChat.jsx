@@ -40,7 +40,7 @@ const DashboardStatusReportChat = ({
   const transformedChartData = React.useMemo(() => {
     if (!chartData || chartData.length === 0) return defaultChartData;
 
-    // Convert the incoming data format to match faculty portal format
+    // Convert the incoming data format to match school portal format
     return chartData
       .map(item => ({
         status: item.label || item.status || 'Unknown Status',
