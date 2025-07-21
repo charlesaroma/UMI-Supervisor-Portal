@@ -239,18 +239,7 @@ const proposal = useMemo(() => {
             ) : (
               <div className="text-center text-gray-500">No proposal selected</div>
             )}
-             {/* More Details Button */}
-             <div className="mt-5 w-full flex justify-center  mx-auto ">
-                <Button
-                 onClick={() => {
-                  navigate(`/grades/proposal/${proposal.id}`);
-                 }}
-                  variant="outline"
-                  className="bg-primary-500 text-white hover:text-primary-500 hover:border-primary-500"
-                >
-                  View More Details
-                </Button>
-              </div>
+            
           </div>
         </SheetContent>
       </Sheet>
